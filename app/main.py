@@ -1,8 +1,8 @@
 from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import JSONResponse
-from app.pdf_parser import extract_questions
-from app.policy_retriever import load_policy_index, find_relevant_chunks
-from app.gemini_client import analyze_question_with_gemini
+from pdf_parser import extract_questions
+from policy_retriever import load_policy_index, find_relevant_chunks
+from gemini_client import analyze_question_with_gemini
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()

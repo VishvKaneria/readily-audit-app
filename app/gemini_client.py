@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 load_dotenv("key.env")
 API_KEY = os.getenv("GOOGLE_API_KEY")
 
-API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent"
+API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent"
 
 
 def analyze_question_with_gemini(question: str, chunks: list) -> dict:
