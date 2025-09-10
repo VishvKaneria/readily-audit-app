@@ -5,4 +5,4 @@ python-multipart
 requests
 python-dotenv
 numpy
-sentence_transformers
+sentence-transformers
