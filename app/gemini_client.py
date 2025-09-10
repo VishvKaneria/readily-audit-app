@@ -4,7 +4,7 @@ import requests
 from dotenv import load_dotenv
 
 # Load API key
-load_dotenv("key.env")
+load_dotenv()
 API_KEY = os.getenv("GOOGLE_API_KEY")
 
 API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent"
