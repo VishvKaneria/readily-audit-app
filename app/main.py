@@ -8,20 +8,11 @@ from pdf_parser import extract_questions
 from policy_retriever import find_relevant_chunks
 from gemini_client import analyze_question_with_gemini
 
-app = FastAPI()
 policy_index = []
 
-# Allow React frontend to talk to FastAPI
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # React dev server
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+@asynccontextmanager
+async def lifespan(app: FastAPI):
 
-@app.on_event("startup")
-def load_policy_index():
     global policy_index
     merged = []
 
@@ -37,7 +28,20 @@ def load_policy_index():
 
     policy_index = merged
     print(f"Loaded {len(policy_index)} records from {len(os.listdir(parts_dir))} part files")
+    yield
+    print("Server shutting down...")
 
+
+app = FastAPI(lifespan=lifespan)
+
+# Allow React frontend to talk to FastAPI
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # React dev server
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 def root():
