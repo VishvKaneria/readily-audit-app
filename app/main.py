@@ -2,6 +2,7 @@ import os
 import json
 from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import JSONResponse
+from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
 
 from pdf_parser import extract_questions

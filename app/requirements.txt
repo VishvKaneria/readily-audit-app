@@ -6,3 +6,6 @@ requests
 python-dotenv
 numpy
 sentence-transformers
+scikit-learn
+pydantic
+httpx
