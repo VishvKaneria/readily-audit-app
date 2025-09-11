@@ -7,7 +7,8 @@ _embedder = None
 def get_embedder():
     global _embedder
     if _embedder is None:
-        model_path = os.path.join(os.path.dirname(__file__), "all-MiniLM-L6-v2")
+        model_path = os.path.join(os.path.dirname(__file__), "models", "all-MiniLM-L6-v2")
+        print(f"Loading model from {model_path}")
         _embedder = SentenceTransformer(model_path)
     return _embedder
 
