@@ -6,7 +6,8 @@ _embedder = None
 def get_embedder():
     global _embedder
     if _embedder is None:
-        _embedder = SentenceTransformer("all-MiniLM-L6-v2")
+        model_path = os.path.join(os.path.dirname(__file__), "all-MiniLM-L6-v2")
+        _embedder = SentenceTransformer(model_path)
     return _embedder
 
 def cosine_similarity(a, b):
