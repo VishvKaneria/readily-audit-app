@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 API_KEY = os.getenv("VERTEX_API_KEY")
 
-API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent"
+API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent"
 
 
 def analyze_question_with_gemini(question: str, chunks: list) -> dict:
