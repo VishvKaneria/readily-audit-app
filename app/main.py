@@ -26,7 +26,7 @@ def load_policy_index():
     merged = []
 
     # Resolve absolute path for policy_parts folder
-    parts_dir = os.path.join(os.path.dirname(__file__), "../policy_parts")
+    parts_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "policy_parts"))
 
     for filename in sorted(os.listdir(parts_dir)):
         if filename.startswith("policy_index_part") and filename.endswith(".json"):
