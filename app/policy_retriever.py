@@ -1,5 +1,6 @@
 import numpy as np
 from sentence_transformers import SentenceTransformer
+import os
 
 # Lazy load embedder
 _embedder = None
