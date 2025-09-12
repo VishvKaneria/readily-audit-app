@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import "./App.css"; // Import custom CSS
+import "./App.css";
 
 function App() {
   const [file, setFile] = useState(null);
   const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const API_URL = "https://readily-audit-app-production.up.railway.app";
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -21,7 +23,7 @@ function App() {
 
     setLoading(true);
     try {
-      const res = await fetch("http://127.0.0.1:8000/upload", {
+      const res = await fetch(`${API_URL}/upload`, {
         method: "POST",
         body: formData,
       });
