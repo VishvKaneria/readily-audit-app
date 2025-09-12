@@ -1,5 +1,6 @@
 import os
 import json
+import asyncio
 from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import JSONResponse
 from contextlib import asynccontextmanager
@@ -62,18 +63,21 @@ async def upload_pdf(file: UploadFile = File(...)):
     pdf_bytes = await file.read()
     questions = extract_questions(pdf_bytes)
 
-    results = []
-    for q in questions:
+    # Build async tasks for all questions
+    async def analyze(q):
         relevant_chunks = find_relevant_chunks(q["question"], policy_index, top_k=15)
-        analysis = analyze_question_with_gemini(q["question"], relevant_chunks)
-
-        results.append({
+        # Wrap the sync Gemini call into a thread (so asyncio can parallelize)
+        analysis = await asyncio.to_thread(analyze_question_with_gemini, q["question"], relevant_chunks)
+        return {
             "id": q["id"],
             "question": q["question"],
             "requirement_met": analysis.get("requirement_met", False),
-            "policy": analysis.get("policy", None),
-            "page": analysis.get("page", None),
+            "policy": analysis.get("policy"),
+            "page": analysis.get("page"),
             "evidence": analysis.get("evidence", "")
-        })
+        }
+
+    # Run all Gemini calls concurrently
+    results = await asyncio.gather(*(analyze(q) for q in questions))
 
     return {"questions": results}
